@@ -1,0 +1,23 @@
+#heading-_select {
+    display: none;
+}
+
+.cell-_select {
+    display: none;
+}
+
+.list-controls__buttons{
+    display: none;
+}
+
+.field-type.select.read-only{
+    display: none !important;
+}
+
+.checkbox-input--read-only{
+    display: none;
+}
+
+.relationship--read-only{
+    display: none;
+}

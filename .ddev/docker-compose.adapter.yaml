@@ -1,0 +1,9 @@
+services:
+  web:
+    ports:
+      - "9230:9230"
+    expose:
+      - "3002"
+    environment:
+      - HTTP_EXPOSE=80:3002
+      - HTTPS_EXPOSE=443:3002
