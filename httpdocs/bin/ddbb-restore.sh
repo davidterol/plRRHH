@@ -7,7 +7,7 @@ DEV_URL="mongodb://db:db@mongo:27017/db?authSource=admin"
 # mongodump --uri $PROD_URL -o=/tmp --gzip
 #
 echo "Restoring database..."
-mongorestore --uri $DEV_URL --drop --gzip --nsInclude="db.*" --dir=~/Documentos/GIT/plRRHH/dump/
+mongorestore --uri $DEV_URL --drop --gzip --nsInclude="db.*" --dir=../../dump/rlRRHH/db/
 # rm -rf /tmp/inet2you_prod
 
 # echo "Run migrations..."
