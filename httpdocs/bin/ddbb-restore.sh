@@ -8,7 +8,7 @@ DEV_URL="mongodb://db:db@mongo:27017/db?authSource=admin"
 #
 echo "Restoring database..."
 mongorestore --uri $DEV_URL --drop --gzip --nsInclude="db.*" --dir=../../dump/rlRRHH/db/
-# rm -rf /tmp/inet2you_prod
+rm -rf ../../dump/*
 
 # echo "Run migrations..."
 # echo y | npm run payload migrate

@@ -4,7 +4,7 @@ echo "######## SELECCIONA ###########"
 options=("RESTORE" "BACKUP")
 select opt in "${options[@]}" "Quit"; do
     case $opt in
-        "REAL")
+        "RESTORE")
             echo "######## BBDD RESTORE ###########"
            bash ./bin/ddbb-restore.sh 
             break
