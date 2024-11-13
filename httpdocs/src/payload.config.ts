@@ -12,11 +12,11 @@ import { Request } from './payload/collections/Request'
 import { Employees } from './payload/collections/users/Employees'
 
 import { CustomViews } from './payload/collections/Views'
-import  { CustomPage }  from './payload/components/views/CustomPage'
-
+import { CustomPage } from './payload/components/views/CustomPage'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const payloadFolder = path.resolve(dirname, 'payload')
 
 export default buildConfig({
   admin: {
@@ -54,6 +54,7 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
+    migrationDir: path.resolve(payloadFolder, 'migrations'),
   }),
   sharp,
   plugins: [
