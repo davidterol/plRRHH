@@ -45,7 +45,7 @@ export default buildConfig({
     //   Component: "/payload/components/user/Avatar",
     // },
   },
-  collections: [CustomViews],
+  collections: [Employees, Media, Request],
 
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
