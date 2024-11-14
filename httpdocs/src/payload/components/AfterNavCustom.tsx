@@ -1,15 +1,15 @@
-"use client"
-import { NavGroup } from "@payloadcms/ui"
-import Link from "next/link"
-import { cn } from "@/utils/cn"
-import { usePathname } from "next/navigation"
+'use client'
+import { NavGroup } from '@payloadcms/ui'
+import Link from 'next/link'
+import { cn } from '@/utils/cn'
+import { usePathname } from 'next/navigation'
 
 const customRoutes: {
-  label: string,
-  path: string,
+  label: string
+  path: string
 }[] = [
-  { label: "Custom Page", path: "/admin/custom-page" },
-  { label: "Other Page", path: "/admin/other-page" },
+  { label: 'Custom Page', path: '/admin/custom-page' },
+  { label: 'Other Page', path: '/admin/other-page' },
 ]
 
 export const AfterNavCustom = () => {
@@ -18,7 +18,7 @@ export const AfterNavCustom = () => {
     <NavGroup label="Custom Routes">
       {customRoutes.map((route) => (
         <Link
-          className={cn("nav__link", route.path === pathname && "active")}
+          className={cn('nav__link', route.path === pathname && 'active')}
           key={route.path}
           href={route.path}
         >
