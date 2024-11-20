@@ -11,20 +11,20 @@ export interface Config {
     users: UserAuthOperations;
   };
   collections: {
+    users: User;
     employees: Employee;
     media: Media;
     request: Request;
-    users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
+    users: UsersSelect<false> | UsersSelect<true>;
     employees: EmployeesSelect<false> | EmployeesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     request: RequestSelect<false> | RequestSelect<true>;
-    users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -60,6 +60,25 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  roles?: ('admin' | 'authenticated' | 'rrhh' | 'managers')[] | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -8230,23 +8249,6 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "request".
  */
 export interface Request {
@@ -8265,6 +8267,10 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
+        relationTo: 'users';
+        value: string | User;
+      } | null)
+    | ({
         relationTo: 'employees';
         value: string | Employee;
       } | null)
@@ -8275,10 +8281,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'request';
         value: string | Request;
-      } | null)
-    | ({
-        relationTo: 'users';
-        value: string | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -8321,6 +8323,23 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  roles?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -8369,21 +8388,6 @@ export interface RequestSelect<T extends boolean = true> {
   user?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
- */
-export interface UsersSelect<T extends boolean = true> {
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

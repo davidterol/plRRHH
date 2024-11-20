@@ -29,23 +29,19 @@ export default buildConfig({
       css: path.resolve('/styles/global.css'),
     },
     components: {
-      afterNavLinks: [
-        '@/payload/components/afterNavLinks/LinkToCustomView#LinkToCustomView',
-        '@/payload/components/afterNavLinks/LinkToCustomMinimalView#LinkToCustomMinimalView',
-        '@/payload/components/afterNavLinks/LinkToCustomDefaultView#LinkToCustomDefaultView',
-      ],
-      views: {
-        CustomPage: {
-          Component: '@/payload/components/views/CustomPage#CustomPage',
-          path: '/custom',
-        },
-      },
+      // afterNavLinks: [
+      //   '@/payload/components/afterNavLinks/LinkToCustomView#LinkToCustomView',
+      //   '@/payload/components/afterNavLinks/LinkToCustomMinimalView#LinkToCustomMinimalView',
+      //   '@/payload/components/afterNavLinks/LinkToCustomDefaultView#LinkToCustomDefaultView',
+      //   '@/payload/components/AfterNavCustom#AfterNavCustom'
+      // ],
+      afterNavLinks: ["/payload/components/AfterNavCustom#AfterNavCustom"],
     },
     // avatar: {
     //   Component: "/payload/components/user/Avatar",
     // },
   },
-  collections: [Employees, Media, Request],
+  collections: [Users, Employees, Media, Request],
 
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

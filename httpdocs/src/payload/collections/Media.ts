@@ -4,8 +4,11 @@ import { admins } from '../access/admins'
 export const Media: CollectionConfig = {
   slug: 'media',
   admin: {
-    group: 'Admin'
-  },
+    group: 'Admin',
+    hidden(args) {
+      return !args.user?.roles?.includes('admin');
+      },
+    },
   access: {
     read: admins,
     create: admins,

@@ -31,6 +31,9 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
     group: 'Admin',
     defaultColumns: ['email', 'active'],
+    hidden(args) {
+      return !args.user?.roles?.includes('admin');
+      },
     listSearchableFields: ['email', 'position'],
   },
   access: {

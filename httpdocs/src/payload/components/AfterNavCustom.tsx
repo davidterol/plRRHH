@@ -1,7 +1,8 @@
 'use client'
-import { NavGroup } from '@payloadcms/ui'
+import { NavGroup, useNav } from '@payloadcms/ui'
 import Link from 'next/link'
 import { cn } from '@/utils/cn'
+import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 
 const customRoutes: {
@@ -12,20 +13,15 @@ const customRoutes: {
   { label: 'Other Page', path: '/admin/other-page' },
 ]
 
+
 export const AfterNavCustom = () => {
   const pathname = usePathname()
+  const { navRef } = useNav()
   return (
-    <NavGroup label="Custom Routes">
-      {customRoutes.map((route) => (
-        <Link
-          className={cn('nav__link', route.path === pathname && 'active')}
-          key={route.path}
-          href={route.path}
-        >
-          {route.path === pathname && <div className="nav__link-indicator" />}
-          <span className="nav__link-label">{route.label}</span>
-        </Link>
-      ))}
-    </NavGroup>
+    useEffect(() => {
+      navRef.current?.classList.add('prueba')
+      navRef.current?.children[0].children[2].classList.add('button')
+      console.log(navRef.current?.children[0].children[2])
+    }, [])
   )
 }
