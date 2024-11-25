@@ -21,3 +21,11 @@
 .relationship--read-only{
     display: none;
 }
+
+[for='field-titulo'] {
+    display: none;
+}
+
+#field-titulo {
+    display: none;
+}

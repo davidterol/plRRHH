@@ -8,11 +8,14 @@ import sharp from 'sharp'
 
 import { Users } from './payload/collections/users/Users'
 import { Media } from './payload/collections/Media'
-import { Request } from './payload/collections/Request'
+import { Requests } from './payload/collections/Requests'
 import { Employees } from './payload/collections/users/Employees'
 
-import { CustomViews } from './payload/collections/Views'
-import { CustomPage } from './payload/components/views/CustomPage'
+// import { CustomViews } from './payload/collections/Views'
+// import { CustomPage } from './payload/components/views/CustomPage'
+// import { access } from 'fs'
+// import { group } from 'console'
+import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -21,7 +24,6 @@ const payloadFolder = path.resolve(dirname, 'payload')
 export default buildConfig({
   admin: {
     // user: Users.slug,
-
     importMap: {
       baseDir: path.resolve(dirname),
     },
@@ -35,14 +37,13 @@ export default buildConfig({
       //   '@/payload/components/afterNavLinks/LinkToCustomDefaultView#LinkToCustomDefaultView',
       //   '@/payload/components/AfterNavCustom#AfterNavCustom'
       // ],
-      afterNavLinks: ["/payload/components/AfterNavCustom#AfterNavCustom"],
+      // afterNavLinks: ['/payload/components/AfterNavCustom#AfterNavCustom'],
     },
     // avatar: {
     //   Component: "/payload/components/user/Avatar",
     // },
   },
-  collections: [Users, Employees, Media, Request],
-
+  collections: [Users, Employees, Media, Requests],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -54,6 +55,6 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // storage-adapter-placeholder
+   
   ],
 })

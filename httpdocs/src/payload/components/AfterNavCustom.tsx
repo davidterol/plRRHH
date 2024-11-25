@@ -20,8 +20,7 @@ export const AfterNavCustom = () => {
   return (
     useEffect(() => {
       navRef.current?.classList.add('prueba')
-      navRef.current?.children[0].children[2].classList.add('button')
-      console.log(navRef.current?.children[0].children[2])
+      console.log(navRef.current?.children[0]?.children[2])
     }, [])
   )
 }

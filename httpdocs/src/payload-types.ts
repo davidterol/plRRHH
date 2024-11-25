@@ -14,7 +14,7 @@ export interface Config {
     users: User;
     employees: Employee;
     media: Media;
-    request: Request;
+    requests: Request;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -24,7 +24,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     employees: EmployeesSelect<false> | EmployeesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    request: RequestSelect<false> | RequestSelect<true>;
+    requests: RequestsSelect<false> | RequestsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -8249,13 +8249,15 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "request".
+ * via the `definition` "requests".
  */
 export interface Request {
   id: string;
   type?: ('asuntos_propios' | 'libre_disposición') | null;
+  titulo?: string | null;
   dateChoose?: string | null;
   user?: (string | null) | User;
+  state?: ('pending' | 'approve' | 'denied') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -8279,7 +8281,7 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'request';
+        relationTo: 'requests';
         value: string | Request;
       } | null);
   globalSlug?: string | null;
@@ -8380,12 +8382,14 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "request_select".
+ * via the `definition` "requests_select".
  */
-export interface RequestSelect<T extends boolean = true> {
+export interface RequestsSelect<T extends boolean = true> {
   type?: T;
+  titulo?: T;
   dateChoose?: T;
   user?: T;
+  state?: T;
   updatedAt?: T;
   createdAt?: T;
 }

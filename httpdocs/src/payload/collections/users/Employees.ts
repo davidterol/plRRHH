@@ -18,8 +18,11 @@ export const Employees: CollectionConfig = {
     },
   },
   admin: {
-    group: 'Empleados',
+    group: 'RRHH',
     useAsTitle: 'mail',
+    hidden(args) {
+      return !args.user?.roles?.includes('admin') || !args.user?.roles?.includes('rrhh') ;
+      },
     defaultColumns: ['mail', 'name', 'apellidos', 'department'],
   },
   access: {
