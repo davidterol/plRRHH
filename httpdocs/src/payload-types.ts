@@ -38,9 +38,9 @@ export interface Config {
   user: User & {
     collection: 'users';
   };
-  jobs?: {
+  jobs: {
     tasks: unknown;
-    workflows?: unknown;
+    workflows: unknown;
   };
 }
 export interface UserAuthOperations {
@@ -69,6 +69,7 @@ export interface User {
   id: string;
   roles?: ('admin' | 'authenticated' | 'rrhh' | 'managers')[] | null;
   active?: boolean | null;
+  employee?: (string | null) | Employee;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -87,10 +88,10 @@ export interface User {
 export interface Employee {
   id: string;
   photo?: (string | null) | Media;
+  nif?: string | null;
   name?: string | null;
   apellidos?: string | null;
   mobile?: string | null;
-  mail?: string | null;
   city?:
     | (
         | 'Agurain/Salvatierra'
@@ -8224,7 +8225,6 @@ export interface Employee {
     | null;
   position?: ('Técnico' | 'Docente' | 'Director/a de Área' | 'Director/a Idiomas' | 'Director/a General') | null;
   category?: ('TG7' | 'TG6' | 'TG5' | 'TG4' | 'TG3' | 'TG2' | 'TG1') | null;
-  user?: (string | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -8235,6 +8235,7 @@ export interface Employee {
 export interface Media {
   id: string;
   alt: string;
+  user?: (string | null) | User;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -8255,9 +8256,21 @@ export interface Request {
   id: string;
   type?: ('asuntos_propios' | 'libre_disposición') | null;
   titulo?: string | null;
+  department?:
+    | (
+        | 'Sistemas'
+        | 'Aceleración Empresarial'
+        | 'Emprendimiento'
+        | 'Personas y Talento'
+        | 'Comunicación'
+        | 'Centro de Idiomas'
+        | 'Administración'
+      )
+    | null;
   dateChoose?: string | null;
   user?: (string | null) | User;
-  state?: ('pending' | 'approve' | 'denied') | null;
+  status?: ('pending' | 'approve' | 'denied') | null;
+  document?: (string | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -8333,6 +8346,7 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   roles?: T;
   active?: T;
+  employee?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -8349,16 +8363,15 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface EmployeesSelect<T extends boolean = true> {
   photo?: T;
+  nif?: T;
   name?: T;
   apellidos?: T;
   mobile?: T;
-  mail?: T;
   city?: T;
   dateOfBirth?: T;
   department?: T;
   position?: T;
   category?: T;
-  user?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -8368,6 +8381,7 @@ export interface EmployeesSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  user?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -8387,9 +8401,11 @@ export interface MediaSelect<T extends boolean = true> {
 export interface RequestsSelect<T extends boolean = true> {
   type?: T;
   titulo?: T;
+  department?: T;
   dateChoose?: T;
   user?: T;
-  state?: T;
+  status?: T;
+  document?: T;
   updatedAt?: T;
   createdAt?: T;
 }

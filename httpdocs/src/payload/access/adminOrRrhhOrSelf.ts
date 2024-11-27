@@ -1,7 +1,7 @@
 import type { Access } from "payload"
 import { checkRole } from "./utils/checkRoles"
 
-export const adminOrRrhhOrSelf: Access = ({ req, id }) => {
+export const adminOrRrhhOrSelf: Access = ({ req }) => {
   const { user } = req
   if (checkRole(["admin"], user)) {
     return true
@@ -10,8 +10,8 @@ export const adminOrRrhhOrSelf: Access = ({ req, id }) => {
     return true
   }
   return (
-    checkRole(["admin"], user) || {
-      id: {
+     {
+      user: {
         equals: user?.id,
       },
     }

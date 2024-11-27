@@ -1,0 +1,69 @@
+@import '~@payloadcms/ui/scss';
+
+
+/**  BULK   **/
+
+#heading-_select {
+  display: none;
+}
+
+.cell-_select {
+  display: none;
+}
+
+// [aria-controls="list-controls-columns"] {
+//   display: none;
+// }
+
+// .collection-list--requests .list-controls {
+//   display: none;
+// }
+
+/* ///////////////////////// */
+
+/* READ ONLY FIELDS */
+.field-type.select.read-only {
+  display: none !important;
+}
+
+.checkbox-input--read-only {
+  display: none;
+}
+
+.relationship--read-only {
+  display: none;
+}
+
+/* ///////////////////////// */
+
+/* HIDE TITLE FROM REQUESTS */
+[for="field-titulo"] {
+  display: none;
+}
+
+#field-titulo {
+  display: none;
+}
+
+/* ///////////////////////// */
+
+/* ///////////////////////// */
+
+/* HIDE TITLE FROM REQUESTS */
+// [for="field-department"] {
+//   display: none;
+// }
+
+// #field-department {
+//   display: none;
+// }
+
+/* ///////////////////////// */
+
+/* [for='field-state'] {
+    display: none;
+}
+
+#field-state {
+    display: none;
+} */

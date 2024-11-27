@@ -19,14 +19,15 @@ export const Employees: CollectionConfig = {
   },
   admin: {
     group: 'RRHH',
-    useAsTitle: 'mail',
-    hidden(args) {
-      return !args.user?.roles?.includes('admin') || !args.user?.roles?.includes('rrhh') ;
+    useAsTitle: 'nif',
+    hidden:(args) => {
+      // console.log(args.user?.roles?.includes('admin'))
+      return !args.user?.roles?.includes('admin') && !args.user?.roles?.includes('rrhh') ;
       },
-    defaultColumns: ['mail', 'name', 'apellidos', 'department'],
+    defaultColumns: ['name', 'apellidos', 'department'],
   },
   access: {
-    read: adminOrRrhhOrSelf,
+    read: () => true,
     create: rrhh,
     update: rrhh,
     delete: rrhh,
@@ -45,17 +46,17 @@ export const Employees: CollectionConfig = {
         {
           type: 'row',
           fields: [
+            { 
+              name: 'nif',
+              label: 'NIF/DNI',
+              type: 'text'
+            },
             name,
             apellidos,
             {
               name: 'mobile',
               label: 'Móvil',
               type: 'text',
-            },
-            {
-                name: 'mail',
-                label: 'Email',
-                type: 'text'
             },
           ],
         },
@@ -79,12 +80,6 @@ export const Employees: CollectionConfig = {
     },
     department,
     position,
-    category,
-    {
-        type: 'relationship',
-        name: 'user',
-        relationTo: 'users',
-        hasMany: false,
-    }
+    category
   ],
 }

@@ -5,13 +5,24 @@ export const department: SelectField = {
   label: "Departamento",
   type: "select",
   required: false,
+  access: {
+    create: (args) => {
+      if (
+        args.req.user?.roles?.includes("rrhh") ||
+        args.req.user?.roles?.includes("admin")
+      ) {
+        return true
+      }
+      return false
+    },
+  },
   options: [
-   "Sistemas",
-   "Aceleración Empresarial",
-   "Emprendimiento",
-   "Personas y Talento",
-   "Comunicación",
-   "Centro de Idiomas",
-   "Administración",
+    "Sistemas",
+    "Aceleración Empresarial",
+    "Emprendimiento",
+    "Personas y Talento",
+    "Comunicación",
+    "Centro de Idiomas",
+    "Administración",
   ],
 }

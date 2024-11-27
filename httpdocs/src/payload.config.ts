@@ -1,60 +1,46 @@
 // storage-adapter-import-placeholder
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import path from 'path'
-import { buildConfig } from 'payload'
-import { fileURLToPath } from 'url'
-import sharp from 'sharp'
+import { mongooseAdapter } from "@payloadcms/db-mongodb"
+import { lexicalEditor } from "@payloadcms/richtext-lexical"
+import path from "path"
+import { buildConfig } from "payload"
+import { fileURLToPath } from "url"
+import sharp from "sharp"
 
-import { Users } from './payload/collections/users/Users'
-import { Media } from './payload/collections/Media'
-import { Requests } from './payload/collections/Requests'
-import { Employees } from './payload/collections/users/Employees'
-
-// import { CustomViews } from './payload/collections/Views'
-// import { CustomPage } from './payload/components/views/CustomPage'
-// import { access } from 'fs'
-// import { group } from 'console'
-import { redirectsPlugin } from '@payloadcms/plugin-redirects'
+import { Users } from "./payload/collections/users/Users"
+import { Media } from "./payload/collections/Media"
+import { Requests } from "./payload/collections/Requests"
+import { Employees } from "./payload/collections/users/Employees"
+import { CustomNav } from "@/payload/components/Nav"
+import { CustomHeader } from "@/payload/components/CustomHeader"
+import { DasboardCustom } from "./payload/components/BeforeDashboardCustom"
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-const payloadFolder = path.resolve(dirname, 'payload')
+const payloadFolder = path.resolve(dirname, "payload")
 
 export default buildConfig({
   admin: {
-    // user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
     custom: {
-      css: path.resolve('/styles/global.css'),
+      css: path.resolve("/styles/global.scss"),
     },
     components: {
-      // afterNavLinks: [
-      //   '@/payload/components/afterNavLinks/LinkToCustomView#LinkToCustomView',
-      //   '@/payload/components/afterNavLinks/LinkToCustomMinimalView#LinkToCustomMinimalView',
-      //   '@/payload/components/afterNavLinks/LinkToCustomDefaultView#LinkToCustomDefaultView',
-      //   '@/payload/components/AfterNavCustom#AfterNavCustom'
-      // ],
-      // afterNavLinks: ['/payload/components/AfterNavCustom#AfterNavCustom'],
+      // header: CustomHeader,
+      // beforeDashboard: DasboardCustom,
     },
-    // avatar: {
-    //   Component: "/payload/components/user/Avatar",
-    // },
   },
   collections: [Users, Employees, Media, Requests],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
+    outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || '',
-    migrationDir: path.resolve(payloadFolder, 'migrations'),
+    url: process.env.DATABASE_URI || "",
+    migrationDir: path.resolve(payloadFolder, "migrations"),
   }),
   sharp,
-  plugins: [
-   
-  ],
+  plugins: [],
 })
