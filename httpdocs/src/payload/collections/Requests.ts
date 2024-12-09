@@ -23,11 +23,13 @@ export const Requests: CollectionConfig = {
           user: {
             not_equals: user.id,
           },
-          and: {
-            department: {
-              equals: user.employee?.valueOf().department,
+          and: [
+            {
+              department: {
+                equals: user.employee?.valueOf().department,
+              },
             },
-          },
+          ],
         }
       }
       if (user?.employee?.valueOf().position == "Director/a General") {
@@ -60,6 +62,15 @@ export const Requests: CollectionConfig = {
           value: "libre_disposición",
         },
       ],
+      access: {
+        update: ({ req }) => {
+          const { user } = req
+          if (user?.roles?.includes("rrhh") || user?.roles?.includes("admin")) {
+            return true
+          }
+          return false
+        },
+      },
     },
     {
       name: "titulo",
@@ -107,26 +118,27 @@ export const Requests: CollectionConfig = {
       ],
       defaultValue: "pending",
       access: {
-        create:() => false,
-      }
-  },
-  {
-    name: 'document',
-    type: 'upload',
-    relationTo: 'media',
-    access: {
-      create:() => true,
-      update:() => false,
-    }
-  }
+        create: () => false,
+      },
+    },
+    {
+      name: "document",
+      type: "upload",
+      relationTo: "media",
+      access: {
+        read: () => true,
+        create: () => true,
+        update: () => false,
+      },
+    },
   ],
   hooks: {
     afterChange: [
       ({ doc, req, collection }) => {
         if (req) {
-          var status = 'pending'
+          var status = "pending"
           if (req.user?.employee?.valueOf().position == "Director/a General") {
-            status = 'approve'
+            status = "approve"
           }
           req.payload.update({
             collection: collection.slug,
@@ -150,7 +162,7 @@ export const Requests: CollectionConfig = {
                 " el día " +
                 format(new Date(doc.dateChoose), "dd/MM/yyyy"),
               department: req.user?.employee?.valueOf().department,
-              status: status
+              status: status,
             },
           })
         }

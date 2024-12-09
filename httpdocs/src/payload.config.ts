@@ -10,9 +10,7 @@ import { Users } from "./payload/collections/users/Users"
 import { Media } from "./payload/collections/Media"
 import { Requests } from "./payload/collections/Requests"
 import { Employees } from "./payload/collections/users/Employees"
-import { CustomNav } from "@/payload/components/Nav"
-import { CustomHeader } from "@/payload/components/CustomHeader"
-import { DasboardCustom } from "./payload/components/BeforeDashboardCustom"
+import { masqueradePlugin } from "payload-plugin-masquerade"
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -29,6 +27,17 @@ export default buildConfig({
     components: {
       // header: CustomHeader,
       // beforeDashboard: DasboardCustom,
+      views: {
+        CustomPage: {
+          Component: "/payload/components/views/calendarView",
+          meta: {
+            title: "Calendar",
+          },
+          path: "/calendar",
+          exact: true,
+        },
+      },
+      afterNavLinks: ["/payload/components/AfterNavCustom#AfterNavCustom"],
     },
   },
   collections: [Users, Employees, Media, Requests],
@@ -42,5 +51,5 @@ export default buildConfig({
     migrationDir: path.resolve(payloadFolder, "migrations"),
   }),
   sharp,
-  plugins: [],
+  plugins: [masqueradePlugin({ enabled: true })],
 })

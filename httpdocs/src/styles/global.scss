@@ -1,5 +1,6 @@
 @import '~@payloadcms/ui/scss';
-
+@import 'react-big-calendar/lib/sass/styles';
+@import 'react-big-calendar/lib/addons/dragAndDrop/styles';
 
 /**  BULK   **/
 
@@ -67,3 +68,11 @@
 #field-state {
     display: none;
 } */
+
+
+.upload__dropzoneContent__orText{
+  display: none;
+}
+.upload__listToggler{
+  display: none;
+}

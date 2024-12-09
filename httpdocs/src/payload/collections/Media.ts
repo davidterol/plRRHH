@@ -9,12 +9,14 @@ export const Media: CollectionConfig = {
     singular: "Archivo"
   },
   admin: {
-    group: 'MENU USUARIO',
+    group: "MENU USUARIO",
+    // defaultColumns: ["email", "active", "masquerade"],
     useAsTitle: 'alt',
     defaultColumns: ['alt', 'updatedAt'],
   },
   access: {
-    read: adminOrRrhhOrSelf,
+    read: managers,
+    update: managers,
     create: ()=> true,
   },
   fields: [
@@ -36,7 +38,7 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     mimeTypes: ['application/pdf'],
-    bulkUpload: false
+    bulkUpload: false,
   },
   hooks: {
     afterChange: [

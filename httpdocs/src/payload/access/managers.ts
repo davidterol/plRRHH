@@ -11,12 +11,42 @@ export const managers: Access = ({ req }) => {
   }
   if (user?.employee?.valueOf().position == "Director/a de Área") {
     return {
-      department: {
-        equals: user?.employee.valueOf().department,
-      },
+      or: [
+        {
+          department: {
+            equals: user?.employee.valueOf().department,
+          },
+        },
+        {
+          user: {
+            equals: user?.id,
+          },
+        },
+      ],
     }
   }
   if (user?.employee?.valueOf().position == "Director/a General") {
+    if (req.url?.includes("/admin/collections/requests/")) {
+      return {
+        or: [
+          {
+            user: {
+              equals: user?.id,
+            },
+          },
+          {
+            user: {
+              in: "67320b018128eef2bc73f80f",
+            },
+          },
+          {
+            type: {
+              equals: "asuntos_propios",
+            },
+          },
+        ],
+      }
+    }
     return {
       or: [
         {
@@ -31,16 +61,11 @@ export const managers: Access = ({ req }) => {
         },
       ],
     }
-  }
-  if (
-    user?.employee?.valueOf().position != "Director/a de Área" ||
-    user?.employee?.valueOf().position != "Director/a General"
-  ) {
+  } else {
     return {
       user: {
         equals: user?.id,
       },
     }
   }
-  return false
 }

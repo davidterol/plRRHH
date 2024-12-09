@@ -9,18 +9,24 @@ const customRoutes: {
   label: string
   path: string
 }[] = [
-  { label: 'Custom Page', path: '/admin/custom-page' },
-  { label: 'Other Page', path: '/admin/other-page' },
+  { label: 'Calendar', path: '/admin/calendar' },
+  // { label: 'Other Page', path: '/admin/other-page' },
 ]
-
 
 export const AfterNavCustom = () => {
   const pathname = usePathname()
-  const { navRef } = useNav()
   return (
-    useEffect(() => {
-      navRef.current?.classList.add('prueba')
-      console.log(navRef.current?.children[0]?.children[2])
-    }, [])
+    <NavGroup label="Enlaces de interés">
+      {customRoutes.map((route) => (
+        <Link
+          className={cn("nav__link", route.path === pathname && "active")}
+          key={route.path}
+          href={route.path}
+        >
+          {route.path === pathname && <div className="nav__link-indicator" />}
+          <span className="nav__link-label">{route.label}</span>
+        </Link>
+      ))}
+    </NavGroup>
   )
 }
