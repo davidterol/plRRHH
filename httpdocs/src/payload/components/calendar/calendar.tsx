@@ -1,65 +1,50 @@
 "use client"
-import dayjs from "dayjs"
-import { useEffect, useState, Fragment, useMemo } from "react"
-import * as Dialog from "@radix-ui/react-dialog"
-import { Calendar, dayjsLocalizer } from "react-big-calendar"
-import WeekdaysView from "./WeekDaysView"
+import { Fragment, useMemo, useCallback } from "react"
+import { Collapsible } from "@payloadcms/ui"
+import { Calendar, dateFnsLocalizer } from "react-big-calendar"
+import { es } from "date-fns/locale/es"
+import { format, parse, startOfWeek, getDay } from "date-fns"
 import PropTypes from "prop-types"
-import "react-big-calendar/lib/css/react-big-calendar.css"
 
-const localizer = dayjsLocalizer(dayjs)
-
-/**
- * Event {
-  title: string,
-  start: Date,
-  end: Date,
-  allDay?: boolean
-  resource?: any,
+const locales = {
+  es: es,
 }
 
-new Date(YYYY, MM-1, DD, HH, MM, SS, SSS),
- */
-const events = [
-  {
-    id: 1,
-    title: "Long Event",
-    start: new Date(2024, 11, 4, 10, 30, 0, 0),
-    end: new Date(2024, 11, 4, 11, 30, 0, 0),
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek: () => {
+    return startOfWeek(new Date(), { weekStartsOn: 1 })
   },
-  {
-    id: 2,
-    title: "Long Event",
-    start: new Date(2024, 11, 5, 13, 30, 0, 0),
-    end: new Date(2024, 11, 5, 14, 30, 0, 0),
-  },
-  {
-    id: 3,
-    title: "Long Event",
-    start: new Date(2024, 11, 5, 15, 30, 0, 0),
-    end: new Date(2024, 11, 5, 16, 30, 0, 0),
-  },
-  {
-    id: 4,
-    title: "Long Event",
-    start: new Date(2024, 11, 5, 17, 30, 0, 0),
-    end: new Date(2024, 11, 5, 18, 30, 0, 0),
-  },
-  {
-    id: 5,
-    title: "Long Event",
-    start: new Date(2024, 11, 5, 19, 30, 0, 0),
-    end: new Date(2024, 11, 5, 20, 30, 0, 0),
-  },
-]
+  getDay,
+  locales,
+})
 
-export function MyCalendar({}) {
+export function MyCalendar({ events, counterl, countera, totalDays }) {
+  const eventPropGetter = useCallback(
+    (event, start, end, isSelected) => ({
+      ...(event.title.includes("Libre") && {
+        style: { backgroundColor: "#FFBEBC", color: "#000000" },
+      }),
+      ...(event.title.includes("Navidad") && {
+        style: { backgroundColor: "#B6CFB6", color: "#000000" },
+      }),
+      ...(event.title.includes("Verano") && {
+        style: { backgroundColor: "#B6CFB6", color: "#000000" },
+      }),
+      ...(event.title.includes("Asuntos") && {
+        style: { backgroundColor: "#ACE7FF", color: "#000000" },
+      }),
+    }),
+    []
+  )
+
   const defaultDate = useMemo(() => new Date(), [])
-  const onSelectSlot = ({ action, slots /*, ...props */ }) => {
+  const onSelectSlot = ({ action, slots }) => {
     console.log("onSelectSlot")
     if (action === "click") {
       console.log("click", slots)
-      alert("click")
+      // alert("click")
     }
     return false
   }
@@ -71,11 +56,39 @@ export function MyCalendar({}) {
           events={events}
           style={{ height: 600 }}
           localizer={localizer}
+          views={{ month: true }}
+          defaultView="month"
+          culture="es"
           selectable={true}
-          popup
+          eventPropGetter={eventPropGetter}
           onSelectSlot={onSelectSlot}
         />
       </div>
+      <Collapsible
+        header="Días Gastados"
+        className="collapsible days-gastados"
+        collapsibleStyle="default"
+        initCollapsed={true}
+      >
+        <div className="collapsible__content">
+          <div className="collapsible__content__item">
+            <p>
+              Libre Disposición: {counterl} de {totalDays[0]}{" "}
+              disponibles
+            </p>
+            <p>
+              Asuntos Propios: {countera} de {totalDays[1]}{" "}
+              disponibles
+            </p>
+          </div>
+        </div>
+
+        {/* <div className="collapsible__content">
+          <div className="collapsible__content__item">
+            <p>Hola</p>
+          </div>
+        </div> */}
+      </Collapsible>
     </Fragment>
   )
 }

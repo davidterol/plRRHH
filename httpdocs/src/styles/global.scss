@@ -76,3 +76,27 @@
 .upload__listToggler{
   display: none;
 }
+
+.days-gastados{
+ width: fit-content;
+ margin-top: 10px;
+ margin-left: auto;
+ border: 0;
+ .collapsible__toggle-wrap{
+  background: aquamarine;
+  color: black;
+  border-radius: 10px;
+  width: fit-content;
+  font-weight: bold;
+ }
+ .collapsible__content .collapsible__content{
+  border: 1px solid aquamarine;
+ }
+}
+.localizer {
+  display: none;
+}
+
+.app-header__account{
+  display: none;
+}

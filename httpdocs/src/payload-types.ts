@@ -32,9 +32,13 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
-  locale: null;
+  globals: {
+    Config: Config1;
+  };
+  globalsSelect: {
+    Config: ConfigSelect<false> | ConfigSelect<true>;
+  };
+  locale: 'es';
   user: User & {
     collection: 'users';
   };
@@ -8441,6 +8445,50 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Config".
+ */
+export interface Config1 {
+  id: string;
+  vacationConfig?: {
+    period?:
+      | {
+          'Nombre Periodo'?: string | null;
+          startDate?: string | null;
+          endDate?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  freeDays?: number | null;
+  freeAP?: number | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Config_select".
+ */
+export interface ConfigSelect<T extends boolean = true> {
+  vacationConfig?:
+    | T
+    | {
+        period?:
+          | T
+          | {
+              'Nombre Periodo'?: T;
+              startDate?: T;
+              endDate?: T;
+              id?: T;
+            };
+      };
+  freeDays?: T;
+  freeAP?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

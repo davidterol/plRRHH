@@ -9,6 +9,7 @@ export const managers: Access = ({ req }) => {
   if (checkRole(["rrhh"], user)) {
     return true
   }
+  if (req.url?.includes("/admin/collections/requests/")) {
   if (user?.employee?.valueOf().position == "Director/a de Área") {
     return {
       or: [
@@ -25,6 +26,7 @@ export const managers: Access = ({ req }) => {
       ],
     }
   }
+}
   if (user?.employee?.valueOf().position == "Director/a General") {
     if (req.url?.includes("/admin/collections/requests/")) {
       return {
