@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload"
 import { adminOrRrhhOrSelf } from "../access/adminOrRrhhOrSelf"
-import { format, compareAsc } from "date-fns"
+import { format, compareAsc, startOfWeek } from "date-fns"
 import { rrhh } from "../access/rrhh"
 import { managers } from "../access/managers"
 import { checkRole } from "../access/utils/checkRoles"
@@ -84,6 +84,12 @@ export const Requests: CollectionConfig = {
       admin: {
         date: {
           displayFormat: "dd/MM/yyyy",
+          pickerAppearance: "dayOnly",
+          minDate: new Date(),
+          maxDate: new Date(new Date().getFullYear(), 11, 31),
+          overrides: {
+            calendarStartDay: 1,
+          }
         },
         disableListFilter: true,
       },

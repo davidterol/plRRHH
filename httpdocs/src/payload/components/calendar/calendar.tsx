@@ -1,10 +1,28 @@
 "use client"
-import { Fragment, useMemo, useCallback } from "react"
-import { Collapsible } from "@payloadcms/ui"
+import { Fragment, useMemo, useCallback, useState } from "react"
+import {
+  Collapsible,
+  Modal,
+  useModal,
+  Button,
+  useConfig,
+  DatePicker,
+  Select,
+} from "@payloadcms/ui"
+import { MinimalTemplate } from "@payloadcms/next/templates"
 import { Calendar, dateFnsLocalizer } from "react-big-calendar"
 import { es } from "date-fns/locale/es"
-import { format, parse, startOfWeek, getDay } from "date-fns"
+import {
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  isFirstDayOfMonth,
+  getDate,
+} from "date-fns"
 import PropTypes from "prop-types"
+import { ClientCollectionConfig } from "payload"
+import { on } from "events"
 
 const locales = {
   es: es,
@@ -20,9 +38,41 @@ const localizer = dateFnsLocalizer({
   locales,
 })
 
-export function MyCalendar({ events, counterl, countera, totalDays }) {
+const createRequest = async (event: Date, type: string, user: Object) => {
+  console.log("CREAATE")
+  console.log(user)
+  console.log(type)
+  console.log(event)
+
+  // try {
+  //   const req = await fetch("../api/requests/", {
+  //     method: "POST",
+  //     credentials: "include",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       type: type,
+  //       dateChoose: event,
+  //       user: user.id,
+  //       department: user.employee.valueOf().department,
+  //       titulo: "Libre Disposición TEST",
+  //     }),
+  //   })
+  //   console.log(await req.json())
+  // } catch (err) {
+  //   console.log(err)
+  // }
+}
+export function MyCalendar({ events, counterl, countera, totalDays, user }) {
+  const { getEntityConfig } = useConfig()
+
+  const collectionConfig = getEntityConfig({
+    collectionSlug: "requests",
+  }) as ClientCollectionConfig
+
   const eventPropGetter = useCallback(
-    (event, start, end, isSelected) => ({
+    (event) => ({
       ...(event.title.includes("Libre") && {
         style: { backgroundColor: "#FFBEBC", color: "#000000" },
       }),
@@ -39,18 +89,71 @@ export function MyCalendar({ events, counterl, countera, totalDays }) {
     []
   )
 
+  // MODAL
+  const { toggleModal } = useModal()
+
+  const modalStug = "modal-1"
+
   const defaultDate = useMemo(() => new Date(), [])
+
+  
+
+  
+  /// CLICK ON DATE
   const onSelectSlot = ({ action, slots }) => {
-    console.log("onSelectSlot")
     if (action === "click") {
-      console.log("click", slots)
-      // alert("click")
+      const year = new Date(slots).getFullYear
+      const month = new Date(slots).getUTCMonth()
+      const day = new Date(slots).getDate
+
+      console.log(month)
+      toggleModal(modalStug)
+      return false
     }
-    return false
   }
+  const [date, onChangeDate] = useState(new Date())
+  const [type, onChangetype] = useState("")
+
   return (
     <Fragment>
-      <div className="">
+      <div className="calendar">
+        {/* <Button onClick={() => toggleModal(modalStug)}>Open Modal</Button> */}
+        <Modal
+          slug={modalStug}
+          className="drawer__content-children modal-bg-blur"
+        >
+          <MinimalTemplate className="drawer__content-children">
+            <label className="field-label">Type</label>
+            <Select
+              options={
+                collectionConfig.fields.filter((f) => f.name === "type")[0]
+                  .options
+              }
+              onChange={(e) => onChangetype(e.value)}
+            />
+            <label className="field-label" style={{ marginTop: "20px" }}>
+              Día elegido
+            </label>
+            <DatePicker
+              value={date}
+              onChange={(date) => onChangeDate(date)}
+              displayFormat="dd/MM/yyyy"
+            />
+
+            <Button
+              buttonStyle="primary"
+              onClick={() => createRequest(date, type, user)}
+            >
+              Create
+            </Button>
+            <Button
+              buttonStyle="secondary"
+              onClick={() => toggleModal(modalStug)}
+            >
+              Close
+            </Button>
+          </MinimalTemplate>
+        </Modal>
         <Calendar
           defaultDate={defaultDate}
           events={events}
@@ -59,9 +162,11 @@ export function MyCalendar({ events, counterl, countera, totalDays }) {
           views={{ month: true }}
           defaultView="month"
           culture="es"
+          // allDayMaxRows={1}
           selectable={true}
           eventPropGetter={eventPropGetter}
           onSelectSlot={onSelectSlot}
+          // onSelectEvent={(e) => handleSelectedEvent(e)}
         />
       </div>
       <Collapsible
@@ -73,12 +178,10 @@ export function MyCalendar({ events, counterl, countera, totalDays }) {
         <div className="collapsible__content">
           <div className="collapsible__content__item">
             <p>
-              Libre Disposición: {counterl} de {totalDays[0]}{" "}
-              disponibles
+              Libre Disposición: {counterl} de {totalDays[0]} disponibles
             </p>
             <p>
-              Asuntos Propios: {countera} de {totalDays[1]}{" "}
-              disponibles
+              Asuntos Propios: {countera} de {totalDays[1]} disponibles
             </p>
           </div>
         </div>
@@ -91,7 +194,4 @@ export function MyCalendar({ events, counterl, countera, totalDays }) {
       </Collapsible>
     </Fragment>
   )
-}
-MyCalendar.propTypes = {
-  localizer: PropTypes.instanceOf(localizer),
 }

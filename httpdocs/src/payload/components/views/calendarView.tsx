@@ -38,12 +38,16 @@ const calendarView: React.FC<AdminViewProps> = async (props) => {
 
   config?.period?.forEach((el) => {
     const start = new Date(el.startDate?.toString())
+    //endDate at 23:59:59
     const end = new Date(el.endDate?.toString())
+    end.setHours(23, 59, 59, 0)
 
+// console.log(end)
     const e: Event = {
       title: el["Nombre Periodo"],
       start: start,
       end: end,
+      allDay: true,
     }
     events.push(e)
   })
@@ -92,7 +96,7 @@ const calendarView: React.FC<AdminViewProps> = async (props) => {
       >
         <div className="gutter--left gutter--right">
           <h1>Calendar</h1>
-          <MyCalendar events={events} counterl={counterl} countera={countera} totalDays={totalDays}></MyCalendar>
+          <MyCalendar events={events} counterl={counterl} countera={countera} totalDays={totalDays} user={user}></MyCalendar>
         </div>
       </DefaultTemplate>
     </>
