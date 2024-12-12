@@ -6,7 +6,8 @@ export const department: SelectField = {
   type: "select",
   required: false,
   access: {
-    create: (args) => {
+    read: () => true,
+    update: (args) => {
       if (
         args.req.user?.roles?.includes("rrhh") ||
         args.req.user?.roles?.includes("admin")

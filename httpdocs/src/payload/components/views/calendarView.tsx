@@ -28,12 +28,13 @@ const calendarView: React.FC<AdminViewProps> = async (props) => {
 
   const vacations = await payload.findGlobal({
     slug: "Config",
-    depth: 2,
   })
-  const config = vacations.vacationConfig
+  const configPar = vacations.vacationConfigP
+  const configCDI = vacations.vacationConfigCDI
+  const config = user?.employee?.valueOf().department == 'Centro de Idiomas' ? configCDI : configPar
 
-  const freeDays = vacations.freeDays
-  const freeAP = vacations.freeAP
+  const freeDays = config?.freeDays
+  const freeAP = config?.freeAP
   const totalDays = [freeDays, freeAP]
 
   config?.period?.forEach((el) => {

@@ -8452,18 +8452,30 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Config1 {
   id: string;
-  vacationConfig?: {
+  vacationConfigCDI: {
     period?:
       | {
-          'Nombre Periodo'?: string | null;
-          startDate?: string | null;
-          endDate?: string | null;
+          'Nombre Periodo': 'Verano' | 'Navidad';
+          startDate: string;
+          endDate: string;
           id?: string | null;
         }[]
       | null;
+    freeDays: number;
+    freeAP: number;
   };
-  freeDays?: number | null;
-  freeAP?: number | null;
+  vacationConfigP: {
+    period?:
+      | {
+          'Nombre Periodo': 'Verano' | 'Navidad';
+          startDate: string;
+          endDate: string;
+          id?: string | null;
+        }[]
+      | null;
+    freeDays: number;
+    freeAP: number;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -8472,7 +8484,7 @@ export interface Config1 {
  * via the `definition` "Config_select".
  */
 export interface ConfigSelect<T extends boolean = true> {
-  vacationConfig?:
+  vacationConfigCDI?:
     | T
     | {
         period?:
@@ -8483,9 +8495,23 @@ export interface ConfigSelect<T extends boolean = true> {
               endDate?: T;
               id?: T;
             };
+        freeDays?: T;
+        freeAP?: T;
       };
-  freeDays?: T;
-  freeAP?: T;
+  vacationConfigP?:
+    | T
+    | {
+        period?:
+          | T
+          | {
+              'Nombre Periodo'?: T;
+              startDate?: T;
+              endDate?: T;
+              id?: T;
+            };
+        freeDays?: T;
+        freeAP?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

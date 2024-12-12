@@ -12,6 +12,7 @@ import { Requests } from "./payload/collections/Requests";
 import { Employees } from "./payload/collections/users/Employees";
 import { masqueradePlugin } from "payload-plugin-masquerade";
 import { Config } from "./payload/globals/Config";
+import { redirectsPlugin } from "@payloadcms/plugin-redirects";
 
 // import { dashboardView } from "./payload/components/views/dashboardView";
 

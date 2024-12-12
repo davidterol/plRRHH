@@ -8,11 +8,48 @@ import { department } from "../reusable"
 import { access } from "fs"
 // import setAuthor from './hooks/setAuthor.ts'
 
+
 export const Requests: CollectionConfig = {
   slug: "requests",
   access: {
     read: managers,
-    create: adminOrRrhhOrSelf,
+    create: async ({ req }) => {
+      const { user, payload } = req
+       const vacations = await payload.findGlobal({
+          slug: "Config",
+        })
+        const requests = await payload.find({
+          collection: "requests",
+        })
+        const daysExpendedL = requests.docs.filter((request) => request.status == "approve" && request.type == "libre_disposición")
+        const daysExpendedA = requests.docs.filter((request) => request.status == "approve" && request.type == "asuntos_propios")
+        const configPar = vacations.vacationConfigP
+        const configCDI = vacations.vacationConfigCDI
+        const config =
+          user?.employee?.valueOf().department == "Centro de Idiomas"
+            ? configCDI
+            : configPar
+        const freeDays = config?.freeDays
+        const freeAP = config?.freeAP
+
+
+        if (freeDays - daysExpendedL.length == 0 && freeAP - daysExpendedA.length == 0) {
+          return false
+        }
+      if (checkRole(["admin"], user)) {
+        return true
+      }
+      if (checkRole(["rrhh"], user)) {
+        return true
+      }
+      return (
+         {
+          user: {
+            equals: user?.id,
+          },
+        }
+      )
+    },
     update: ({ req }) => {
       const { user } = req
       if (user?.roles?.includes("rrhh") || user?.roles?.includes("admin")) {
@@ -39,11 +76,20 @@ export const Requests: CollectionConfig = {
     },
     delete: rrhh,
   },
+  // auth: {
+  //   useAPIKey: true,
+  //   // loginWithUsername: {
+  //   //   allowEmailLogin: true,
+  //   // }
+  // },
   admin: {
     group: "MENU USUARIO",
     useAsTitle: "titulo",
     defaultColumns: ["titulo", "dateChoose", "status", "department"],
     listSearchableFields: ["titulo"],
+    hidden: (args) => {
+      return !args.user?.roles?.includes("admin")
+    },
     // baseListFilter: (args) => ({
     //     titulos:
     // })
@@ -60,6 +106,7 @@ export const Requests: CollectionConfig = {
         {
           label: "Libre Disposición",
           value: "libre_disposición",
+
         },
       ],
       access: {
@@ -89,7 +136,7 @@ export const Requests: CollectionConfig = {
           maxDate: new Date(new Date().getFullYear(), 11, 31),
           overrides: {
             calendarStartDay: 1,
-          }
+          },
         },
         disableListFilter: true,
       },
@@ -124,7 +171,8 @@ export const Requests: CollectionConfig = {
       ],
       defaultValue: "pending",
       access: {
-        create: () => false,
+        update: () => false,
+        read: () => true,
       },
     },
     {
@@ -143,7 +191,7 @@ export const Requests: CollectionConfig = {
       ({ doc, req, collection }) => {
         if (req) {
           var status = "pending"
-          if (req.user?.employee?.valueOf().position == "Director/a General") {
+          if (req.user?.employee?.valueOf().position == "Director/a General" || req.user?.roles?.includes("admin")) {
             status = "approve"
           }
           req.payload.update({
