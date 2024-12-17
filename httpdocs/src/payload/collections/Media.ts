@@ -37,7 +37,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    mimeTypes: ['application/pdf'],
+    mimeTypes: ['application/pdf', 'image'],
     bulkUpload: false,
   },
   hooks: {

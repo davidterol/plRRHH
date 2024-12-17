@@ -12,9 +12,9 @@ import { Requests } from "./payload/collections/Requests";
 import { Employees } from "./payload/collections/users/Employees";
 import { masqueradePlugin } from "payload-plugin-masquerade";
 import { Config } from "./payload/globals/Config";
-import { redirectsPlugin } from "@payloadcms/plugin-redirects";
+import { Faqs } from "./payload/collections/Faqs";
 
-// import { dashboardView } from "./payload/components/views/dashboardView";
+
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -40,8 +40,14 @@ export default buildConfig({
           path: "/calendar",
           exact: true,
         },
-        
-        // dashboard: {Component: dashboardView},
+        Faq: {
+          Component: "/payload/components/views/faqView",
+          meta: {
+            title: "FAQs",
+          },
+          path: "/faqs",
+          exact: true,
+        },
       },
       graphics: {
         Logo: {
@@ -58,7 +64,7 @@ export default buildConfig({
     locales: [{ label: "", code: "es" }],
     defaultLocale: "es",
   },
-  collections: [Users, Employees, Media, Requests],
+  collections: [Users, Employees, Media, Requests, Faqs],
   globals: [Config],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",

@@ -1,3 +1,6 @@
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
 @import '~@payloadcms/ui/scss';
 @import 'react-big-calendar/lib/sass/styles';
 @import 'react-big-calendar/lib/addons/dragAndDrop/styles';
@@ -104,3 +107,6 @@
 .modal-bg-blur {
   backdrop-filter: blur(2px);
 }
+
+////////////////
+

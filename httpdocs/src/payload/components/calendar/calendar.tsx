@@ -229,7 +229,7 @@ export function MyCalendar({ events, counterl, countera, totalDays, user }) {
         />
       </div>
       <Collapsible
-        header="Días Gastados"
+        header={"Días Gastados ("+(counterl+countera)+")"}
         className="collapsible days-gastados"
         collapsibleStyle="default"
         initCollapsed={true}
@@ -237,19 +237,13 @@ export function MyCalendar({ events, counterl, countera, totalDays, user }) {
         <div className="collapsible__content">
           <div className="collapsible__content__item">
             <p>
-              Libre Disposición: {counterl} de {totalDays[0]} disponibles
+              Libre Disposición: {counterl} / {totalDays[0]}
             </p>
             <p>
-              Asuntos Propios: {countera} de {totalDays[1]} disponibles
+              Asuntos Propios: {countera} / {totalDays[1]} 
             </p>
           </div>
         </div>
-
-        {/* <div className="collapsible__content">
-          <div className="collapsible__content__item">
-            <p>Hola</p>
-          </div>
-        </div> */}
       </Collapsible>
     </Fragment>
   )

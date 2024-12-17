@@ -2,7 +2,6 @@
 import { NavGroup, useNav } from '@payloadcms/ui'
 import Link from 'next/link'
 import { cn } from '@/utils/cn'
-import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 
 const customRoutes: {
@@ -10,6 +9,7 @@ const customRoutes: {
   path: string
 }[] = [
   { label: 'Calendar', path: '/admin/calendar' },
+  { label: 'FAQs', path: '/admin/faqs' },
   // { label: 'Other Page', path: '/admin/other-page' },
 ]
 
