@@ -8384,7 +8384,6 @@ export interface UsersSelect<T extends boolean = true> {
   roles?: T;
   active?: T;
   employee?: T;
-  masquerade?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

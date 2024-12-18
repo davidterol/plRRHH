@@ -1,9 +1,6 @@
-// @tailwind base;
-// @tailwind components;
-// @tailwind utilities;
-@import '~@payloadcms/ui/scss';
-@import 'react-big-calendar/lib/sass/styles';
-@import 'react-big-calendar/lib/addons/dragAndDrop/styles';
+@import "~@payloadcms/ui/scss";
+@import "react-big-calendar/lib/sass/styles";
+@import "react-big-calendar/lib/addons/dragAndDrop/styles";
 
 /**  BULK   **/
 
@@ -72,35 +69,34 @@
     display: none;
 } */
 
-
-.upload__dropzoneContent__orText{
+.upload__dropzoneContent__orText {
   display: none;
 }
-.upload__listToggler{
+.upload__listToggler {
   display: none;
 }
 
-.days-gastados{
- width: fit-content;
- margin-top: 10px;
- margin-left: auto;
- border: 0;
- .collapsible__toggle-wrap{
-  background: aquamarine;
-  color: black;
-  border-radius: 10px;
+.days-gastados {
   width: fit-content;
-  font-weight: bold;
- }
- .collapsible__content .collapsible__content{
-  border: 1px solid aquamarine;
- }
+  margin-top: 10px;
+  margin-left: auto;
+  border: 0;
+  .collapsible__toggle-wrap {
+    background:rgb(56 189 248);
+    color: white;
+    border-radius: 10px;
+    width: fit-content;
+    font-weight: bold;
+  }
+  .collapsible__content .collapsible__content {
+    border: 1px solid rgb(56 189 248);
+  }
 }
 .localizer {
   display: none;
 }
 
-.app-header__account{
+.app-header__account {
   display: none;
 }
 
@@ -110,3 +106,69 @@
 
 ////////////////
 
+.nav-group__label {
+  font-weight: bold;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+.collapsible__toggle {
+  span {
+    color: #0000 !important;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: revert !important;
+  font-weight: revert !important;
+}
+
+.rbc-toolbar-label {
+  font-size: large;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+.rbc-header {
+  text-transform: uppercase;
+  font-size: xx-small;
+  align-content: center;
+}
+
+.rbc-btn-group {
+  button:hover {
+    color: white !important;
+    background-color: skyblue;
+  }
+  button:first-child:after{
+    content: "⌂";
+    font-size: bold;
+    font-size: large;
+    vertical-align: middle;
+    
+  }
+  button:first-child{
+    font-size: 0;
+  } 
+  button:last-child:after{
+    content: "→";
+    font-weight: bold;
+    font-size: large;
+    vertical-align: middle;
+  }
+  button:last-child{
+    font-size: 0;
+  }
+  button:not(:first-child):not(:last-child):after{
+    content: "←";
+    font-weight: bold;
+    font-size: large;
+    vertical-align: middle;
+  }
+  button:not(:first-child):not(:last-child){
+    font-size: 0;
+  }
+}

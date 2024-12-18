@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from 'next/navigation'
 
-import "../../../styles/scss/faqs.css"
+import "../../../styles/scss/faqs.scss"
 
 
 

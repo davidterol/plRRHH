@@ -27,7 +27,7 @@ const faqView: React.FC<AdminViewProps> = async (props) => {
       visibleEntities={visibleEntities}
       locale={initPageResult.locale}
       permissions={initPageResult.permissions}
-      user={user}
+      user={user as any}
       searchParams={searchParams}
     >
       <div className="aaa">

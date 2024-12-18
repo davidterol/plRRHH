@@ -3,7 +3,23 @@
 @tailwind utilities;
 
 
+@media (width >= 1024px) {
+  .lg\:w-8\/12 {
+      width: 100% !important;
+  }
+}
+.faq_content {
+  padding-left: 3%;
+  img {
+    max-width: 250px;
+    max-height: 140,625px;
+  }
+  ol {
+    margin-left: 1%;
+    list-style: auto;
+  }
 
+}
 :root {
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 214, 219, 220;
@@ -27,12 +43,10 @@
       )
       rgb(var(--background-start-rgb));
   }
-  
-  ol {
-    list-style: auto;
-  }
+
   @layer utilities {
     .text-balance {
       text-wrap: balance;
     }
   }
+

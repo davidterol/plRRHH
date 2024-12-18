@@ -14,7 +14,7 @@ import { Calendar, dateFnsLocalizer } from "react-big-calendar"
 import { es } from "date-fns/locale/es"
 import { format, parse, startOfWeek, getDay } from "date-fns"
 import { ClientCollectionConfig } from "payload"
-
+import { calendarTools } from "./calendarTools"
 // LOCALE
 const locales = {
   es: es,
@@ -219,6 +219,7 @@ export function MyCalendar({ events, counterl, countera, totalDays, user }) {
           localizer={localizer}
           views={{ month: true }}
           defaultView="month"
+          components={{toolbar:calendarTools}}
           culture="es"
           selectable
           eventPropGetter={eventPropGetter}
